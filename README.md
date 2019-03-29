@@ -1,1 +1,1 @@
-# Game-Theoric-Network-Centrality
+# Game-Theoric Network Centrality on Brain Networks
