@@ -6,12 +6,13 @@
         characteristic function.
 
     TODO:
-        - Uncomment all
+        - Uncomment All Parts
 
 """
 from ALGORITHM.INIT.matrix_uploader import MatrixUploader
 from GAME.game import Game
-from ALGORITHM.POLYNOMIAL_IMPLEMENTATION.polynomial_algorithm import semi_algorithm
+from ALGORITHM.IMPLEMENTATIONS.POLYNOMIAL_IMPLEMENTATION.polynomial_algorithm import semi_algorithm
+
 
 class GamesManager:
     """ Creator and manager of the game
@@ -27,28 +28,43 @@ class GamesManager:
     def __init__(self):
         """ Initialization of the game
 
-                    Method that initialize the game by:
-                    - importing the adjacency matrix into the python script
-                    - visualize the adjacency matrix as a directed graph
+            Method that initialize the game by:
+            - importing the adjacency matrix into the python script
+            - visualize the adjacency matrix as a directed graph
 
-                    Args:
-                        no args are needed.
+            Args:
+                no args are needed.
 
-                    Returns:
-                        no return is needed.
+            Returns:
+                no return is needed.
 
-                """
+        """
         # Loading the adjacency matrix and printing it
         adjacency_matrix = MatrixUploader().get_matrix()
         # Graph construction and visualization
         # GraphBuilder(adjacency_matrix).graph_construction()
         # New Game
-        self.game = Game(adjacency_matrix, input("Select the characteristic function"))
+        self.game = Game(adjacency_matrix, input("Select the characteristic function:\n"
+                                                 " - \tgroup_degree_centrality\n"
+                                                 " - \tgroup_betweenness_centrality\n"
+                                                 " - \tgroup_closeness_centrality"))
 
     def centrality_algorithm(self, choice):
+        """ Application of the chosen algorithm
+
+            There are basically two main choices to make a comparison:
+                - Exponential: the classical Shapley Value algorithm.
+                - Polynomial: the SEMI value application.
+
+            Args:
+                self: the instance itself that i can use to pass the game to the algorithm.
+                choice (string): represent the choice of the user on the algorithm complexity.
+
+            Returns:
+                no return is needed.
+
+        """
         if choice == "Polynomial":
-            semi_algorithm(self.game, input("Select the centrality measure"))
+            semi_algorithm(self.game, self.game.characteristic_function.centrality_measure_selection())
         if choice == "Exponential":
-            print("Working on it")
-        else:
-            return None
+            print("Working on it...")

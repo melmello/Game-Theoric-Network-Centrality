@@ -4,9 +4,6 @@
         This class is used in order to have a feedback on the graph structure.
         The screen prints out the adjacency matrix as a directed graph.
 
-    TODO: x,y in the for
-        - names convention
-
 """
 import numpy as np
 import networkx as nx

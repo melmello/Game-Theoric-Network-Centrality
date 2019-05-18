@@ -11,13 +11,16 @@
     No class are present
 
 """
-from games_manager import GamesManager
+from GAME.games_manager import GamesManager
 
 
 def main():
     """ Classical main function
 
         This function is the fundamental one that starts all.
+        Main parts:
+            - game_manager initialization.
+            - centrality_algorithm application.
 
         Args:
             no args are needed.
@@ -26,7 +29,12 @@ def main():
             no return is needed.
 
     """
-    GamesManager().initialization()
+    # Initialization
+    game_manager = GamesManager()
+    # Algorithm Application
+    game_manager.centrality_algorithm(input("Select the algorithm complexity:\n"
+                                            " - \tPolynomial\n"
+                                            " - \tExponential (Working on it)"))
 
 
 if __name__ == "__main__":
