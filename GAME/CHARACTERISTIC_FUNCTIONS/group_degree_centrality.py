@@ -3,13 +3,10 @@
     GroupDegreeCentrality(GroupCentralityMeasure):
         degree version of the characteristic function.
 
-    TODO:
-        - explanation of degree centrality
-        - explanation of centrality measure
-
 """
 import numpy as np
-from ALGORITHM.MATH_TOOLS.mathematical_tools import fast_binomial
+from ALGORITHM.TOOLS.mathematical_tools import fast_binomial
+from ALGORITHM.TOOLS.utility_tools import word_checker
 from GAME.CHARACTERISTIC_FUNCTIONS.group_centrality_measure import GroupCentralityMeasure
 
 
@@ -80,6 +77,14 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         print(degree_class)
 
         # N & R
+        # ***************************************************
+        # Function cN_G(v, k)
+        #   if |V| - 1 - deg(v) < k then 0
+        #   else (|V| - 1 - deg(v) k)
+        # Function cR_G(v, k)
+        #   if |V| = k then 0
+        #   else (|V| k) - cN_G(v, k) - (|V| - 1 k - 1)
+        # ***************************************************
         # Initialization
         # Neutral and Positive matrix has size
         # number of nodes |V| x the max cardinality of the coalition k
@@ -121,6 +126,12 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         print(positive)
 
         # R, ~R and N
+        # ***************************************************
+        # for v in V do
+        #   for u in E(v) do |RΘdeg(u)({v})| ← |RΘdeg(u)({v})| + 1
+        #   for u not in E(v) do |NΘdeg(u)({v})| ← |NΘdeg(u)({v})| + 1
+        #   |~RΘdeg(u)({v})| ← 1
+        # ***************************************************
         # Initialization
         # All the matrix has size
         # number of nodes |V| x max degree of the nodes
@@ -152,7 +163,14 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         print(negative_relation)
         print("Neutral Relation Matrix")
         print(neutral_relation)
-        return degree, degree_class, neutral, positive, positive_relation, negative_relation, neutral_relation
+        return \
+            degree, \
+            degree_class, \
+            neutral, \
+            positive, \
+            positive_relation, \
+            negative_relation, \
+            neutral_relation
 
     def centrality_measure(self, node, coalition_cardinality, centrality_measure_choice):
         """ Centrality Measure Application
@@ -177,29 +195,37 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
                     Be aware that in case there is a wrong choice, the Degree version is returned.
 
         """
-        # Degree
-        # f = 1
-        # g = 1
-        if centrality_measure_choice == "Degree":
+        # Degree of Everett and Borgatti (1999)
+        # f(v) = 1
+        # g(|C|) = 1
+        if centrality_measure_choice == "degree":
             return 1, 1
-        # Weighted Degree
-        # f = 1/degree(v)
-        # g = 1
-        if centrality_measure_choice == "Weighted Degree":
+        # Weighted Degree of Newman (2004)
+        # f(v) = 1/deg(v)
+        # g(|C|) = 1
+        if centrality_measure_choice == "weighted":
             temp = 0
             for column in range(0, len(self.matrix)):
                 temp += self.matrix[node][column]
             return 1 / temp, 1
-        # Impact Factor
+        # Impact Factor of Bollen, Sompel, Smith, and Luce (2005)
         # f = 1
-        # g = 1/|C| with |C| the coalition size
-        if centrality_measure_choice == "Impact Factor":
-            return 1, 1 / coalition_cardinality
-        # Normalised Degree
+        # g = 1/|C|
+        # if |C| is 0, return 1
+        if centrality_measure_choice == "impact":
+            if coalition_cardinality == 0:
+                return 1, 1
+            else:
+                return 1, 1 / coalition_cardinality
+        # Normalised Degree of Everett and Borgatti (1999)
         # f = 1
-        # g = 1/(|V|-|C|) with |V| number of node and |C| coalition size
-        if centrality_measure_choice == "Normalised Degree":
-            return 1, 1 / (len(self.matrix) - coalition_cardinality)
+        # g = 1/(|V|-|C|)
+        # if |C| = |V|, return 1
+        if centrality_measure_choice == "normalised":
+            if len(self.matrix) == coalition_cardinality:
+                return 1, 1
+            else:
+                return 1, 1 / (len(self.matrix) - coalition_cardinality)
         # Classic Degree version is chosen
         else:
             return 1, 1
@@ -217,8 +243,12 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
                 string: the choice of the user on the centrality measure possibilities.
 
         """
-        return input("Select the centrality measure:\n"
-                     " - \tDegree\n"
-                     " - \tWeighted Degree\n"
-                     " - \tImpact Factor\n"
-                     " - \tNormalised Degree")
+        return word_checker(input("Select the centrality measure:\n"
+                                  " - \tDegree\n"
+                                  " - \tWeighted Degree\n"
+                                  " - \tImpact Factor\n"
+                                  " - \tNormalised Degree"),
+                            ["degree",
+                             "weighted",
+                             "impact",
+                             "normalised"])

@@ -11,6 +11,7 @@
     No class are present
 
 """
+from ALGORITHM.TOOLS.utility_tools import word_checker
 from GAME.games_manager import GamesManager
 
 
@@ -32,9 +33,11 @@ def main():
     # Initialization
     game_manager = GamesManager()
     # Algorithm Application
-    game_manager.centrality_algorithm(input("Select the algorithm complexity:\n"
-                                            " - \tPolynomial\n"
-                                            " - \tExponential (Working on it)"))
+    game_manager.centrality_algorithm(word_checker(input("Select the algorithm complexity:\n"
+                                                         " - \tPolynomial\n"
+                                                         " - \tExponential (Working on it)"),
+                                                   ["Polynomial",
+                                                    "Exponential"]))
 
 
 if __name__ == "__main__":

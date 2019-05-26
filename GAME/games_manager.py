@@ -5,13 +5,15 @@
         An example is the import of the user's matrix, the graph visualization or the choice of the
         characteristic function.
 
-    TODO:
-        - Uncomment All Parts
-
 """
+from ALGORITHM.IMPLEMENTATIONS.EXPONENTIAL_IMPLEMENTATION.exponential_algorithm \
+    import classical_algorithm
+from ALGORITHM.IMPLEMENTATIONS.POLYNOMIAL_IMPLEMENTATION.polynomial_algorithm \
+    import semi_algorithm
+from ALGORITHM.INIT.graph_builder import GraphBuilder
 from ALGORITHM.INIT.matrix_uploader import MatrixUploader
+from ALGORITHM.TOOLS.utility_tools import word_checker
 from GAME.game import Game
-from ALGORITHM.IMPLEMENTATIONS.POLYNOMIAL_IMPLEMENTATION.polynomial_algorithm import semi_algorithm
 
 
 class GamesManager:
@@ -42,12 +44,16 @@ class GamesManager:
         # Loading the adjacency matrix and printing it
         adjacency_matrix = MatrixUploader().get_matrix()
         # Graph construction and visualization
-        # GraphBuilder(adjacency_matrix).graph_construction()
+        GraphBuilder(adjacency_matrix).graph_construction()
         # New Game
-        self.game = Game(adjacency_matrix, input("Select the characteristic function:\n"
-                                                 " - \tgroup_degree_centrality\n"
-                                                 " - \tgroup_betweenness_centrality\n"
-                                                 " - \tgroup_closeness_centrality"))
+        self.game = Game(adjacency_matrix,
+                         word_checker(input("Select the characteristic function:\n"
+                                            " - \tgroup_degree_centrality\n"
+                                            " - \tgroup_betweenness_centrality\n"
+                                            " - \tgroup_closeness_centrality"),
+                                      ["group_degree_centrality",
+                                       "group_betweenness_centrality",
+                                       "group_closeness_centrality"]))
 
     def centrality_algorithm(self, choice):
         """ Application of the chosen algorithm
@@ -65,6 +71,8 @@ class GamesManager:
 
         """
         if choice == "Polynomial":
-            semi_algorithm(self.game, self.game.characteristic_function.centrality_measure_selection())
+            semi_algorithm(self.game,
+                           self.game.characteristic_function.centrality_measure_selection())
         if choice == "Exponential":
-            print("Working on it...")
+            classical_algorithm(self.game,
+                                self.game.characteristic_function.centrality_measure_selection())

@@ -23,10 +23,10 @@ def fast_binomial(first_newton_parameter, second_newton_parameter):
     if 0 <= second_newton_parameter <= first_newton_parameter:
         n_tok = 1
         k_tok = 1
-        for t in range(1, min(second_newton_parameter,
-                              first_newton_parameter - second_newton_parameter) + 1):
+        for temp in range(1, min(second_newton_parameter,
+                                 first_newton_parameter - second_newton_parameter) + 1):
             n_tok *= first_newton_parameter
-            k_tok *= t
+            k_tok *= temp
             first_newton_parameter -= 1
         return n_tok // k_tok
     else:
