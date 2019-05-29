@@ -4375,7 +4375,7 @@
 											"top": 216,
 											"width": 399.2041015625,
 											"height": 13,
-											"text": "+classical_algorithm(game: game, centrality_measure_choice: string)",
+											"text": "+classical_algorithm(game: game)",
 											"horizontalAlignment": 0
 										}
 									],
@@ -8555,15 +8555,6 @@
 													"type": {
 														"$ref": "AAAAAAFq/busTWG4Woo="
 													}
-												},
-												{
-													"_type": "UMLParameter",
-													"_id": "AAAAAAFq/gIYnIt3sY8=",
-													"_parent": {
-														"$ref": "AAAAAAFq/gHnyIno05I="
-													},
-													"name": "centrality_measure_choice",
-													"type": "string"
 												}
 											]
 										}

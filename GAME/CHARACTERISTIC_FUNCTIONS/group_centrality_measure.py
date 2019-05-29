@@ -81,3 +81,21 @@ class GroupCentralityMeasure:
 
         """
         return None
+
+    def get_coalition_value(self, game, node_list, permutation_list):
+        """ Getter of the coalition value
+
+            Method used to return the correspondent value of the coalition
+            using the correspondent characteristic function chosen.
+
+            Args:
+                game (Game): the game characterized by a matrix,
+                    a characteristic function and the input parameters for the SEMI algorithm.
+                node_list ([int]): list with all the node in the network.
+                permutation_list ([int]): coalition for which i want the characteristic value.
+
+            Returns:
+                None: since this is the super method
+
+        """
+        return None

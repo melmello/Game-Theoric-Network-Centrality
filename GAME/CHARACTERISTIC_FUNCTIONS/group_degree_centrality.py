@@ -252,3 +252,46 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
                              "weighted",
                              "impact",
                              "normalised"])
+
+    def get_coalition_value(self, game, node_list, permutation_list):
+        """ Getter of the coalition value
+
+            Method used to return the correspondent value of the coalition
+            using the degree as characteristic function.
+
+            Args:
+                game (Game): the game characterized by a matrix,
+                    a characteristic function and the input parameters for the SEMI algorithm.
+                node_list ([int]): list with all the node in the network.
+                permutation_list ([int]): coalition for which i want the characteristic value.
+
+            Returns:
+                group_degree (int): the value of the coalition.
+
+        """
+        # Initialization
+        group_degree = 0
+        print("\t\tPERMUTATION CONSIDERED: ", permutation_list)
+        # Creating the list with the nodes that must be checked if they are linked
+        # or not to the nodes in permutation_list
+        remaining_node_list = list(set(node_list) - set(permutation_list))
+        print("\t\tON THE LIST: ", node_list)
+        print("\t\tTERMINAL NODE TO BE CHECKED: ", remaining_node_list)
+        # For each node to be checked (if it is a terminal of an edge)
+        for checked_link_node in remaining_node_list:
+            print("\t\t\tCOLUMN: ", checked_link_node)
+            # For each node in the coalition
+            for permutated_node in permutation_list:
+                print("\t\t\t\tROW: ", permutated_node)
+                # If the checked node is linked, add 1 to the degree and break.
+                # This guarantees that we are not counting more times the same node
+                # if more arrows are going there.
+                # Moreover, we guarantee that nor the self cycles or the edge between
+                # two nodes in the same coalition are counted.
+                if game.matrix[permutated_node][checked_link_node] == 1:
+                    group_degree += 1
+                    print("\t\t\t\tBREAKING WITH DEGREE ", group_degree)
+                    # Breaking the inner loop, but currently staying in the outer one
+                    break
+        print("\t\tGROUP DEGREE: ", group_degree)
+        return group_degree

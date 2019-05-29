@@ -70,9 +70,8 @@ class GamesManager:
                 no return is needed.
 
         """
-        if choice == "Polynomial":
+        if choice == "polynomial":
             semi_algorithm(self.game,
                            self.game.characteristic_function.centrality_measure_selection())
-        if choice == "Exponential":
-            classical_algorithm(self.game,
-                                self.game.characteristic_function.centrality_measure_selection())
+        if choice == "exponential":
+            classical_algorithm(self.game)
