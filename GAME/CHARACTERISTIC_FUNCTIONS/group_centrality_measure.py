@@ -33,7 +33,7 @@ class GroupCentralityMeasure:
 
         """
         self.matrix = matrix
-        self.max_cardinality = len(self.matrix)
+        self.nodes_number = len(self.matrix)
 
     def data_preparation(self):
         """ Data Preparation

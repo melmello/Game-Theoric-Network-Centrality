@@ -51,10 +51,8 @@ class GraphBuilder:
         """
         # Counting nodes
         nodes_number = self.matrix.shape[0]
-
         # Unpacking of the row and column coordinates where the ith and jth element is 1
         rows, cols = np.where(self.matrix == 1)
-
         # Rearranges the list of rows and columns into a list of edge tuples.
         # Printing all starting nodes
         # Printing all ending nodes

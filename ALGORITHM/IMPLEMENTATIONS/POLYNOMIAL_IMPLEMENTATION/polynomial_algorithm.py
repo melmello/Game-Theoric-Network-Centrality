@@ -49,14 +49,13 @@ def semi_algorithm(game, centrality_measure_choice):
     """
     # Initialization
     # Shapley Value vector has size equals to the number of nodes.
-    shapley_value_init = (len(game.matrix))
-    shapley_value = np.zeros(shapley_value_init)
+    shapley_value = np.zeros(game.length)
     # For each node considered in order to find its shapley value
-    for evaluated_node in range(0, len(game.matrix)):
+    for evaluated_node in range(0, game.length):
         # For each possible coalition size, starting from the empty and going to |V| - 1
         print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
         print("NODE EVALUATED: ", evaluated_node)
-        for k in range(0, len(game.matrix)):
+        for k in range(0, game.length):
             # Initialize each time the marginal contribution of that node to 0
             marginal_contribution = 0
             # For each l possible value that that the partition of set can assume
@@ -167,7 +166,7 @@ def semi_algorithm(game, centrality_measure_choice):
             # coefficient of |V| - 1 and k
             print("\t\tEND STEP")
             marginal_contribution *= (shapley_beta_function(game) /
-                                      fast_binomial(len(game.matrix) - 1, k))
+                                      fast_binomial(game.length - 1, k))
             print("\t\tWEIGHTED MARGINAL CONTRIBUTION: ", marginal_contribution)
             # Update of the Shapley Value of the node evaluated with the sum of the previous value
             # and the weighted marginal contribution

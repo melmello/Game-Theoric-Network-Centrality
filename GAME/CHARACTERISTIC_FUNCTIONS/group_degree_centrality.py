@@ -51,13 +51,12 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         # DEGREE
         # Initialization
         # Degree has length equal to the number of nodes
-        degree_init = (len(self.matrix))
-        degree = np.zeros(degree_init, dtype=int)
+        degree = np.zeros(self.nodes_number, dtype=int)
         # For each 1 in the row of the matrix,
         # just add one to the correspondent position in the degree vector
         # Note that there can't be 1 on the diagonal thanks to the previous matrix adaption
-        for row in range(0, len(self.matrix)):
-            for column in range(0, len(self.matrix)):
+        for row in range(0, self.nodes_number):
+            for column in range(0, self.nodes_number):
                 degree[row] += self.matrix[row, column]
         print("Degree Vector")
         print(degree)
@@ -65,12 +64,11 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         # DEGREE CLASS
         # Initialization
         # Degree Class vector has length equal to the maximum degree
-        degree_class_init = (max(degree))
-        degree_class = np.zeros(degree_class_init, dtype=int)
+        degree_class = np.zeros(max(degree), dtype=int)
         # For each node, put the degree if the cell is empty
         # In order to have the array position equals to the degree - 1
         # and the cell value correspondent to the node with that degree
-        for row in range(0, len(self.matrix)):
+        for row in range(0, self.nodes_number):
             if degree_class[degree[row] - 1] == 0:
                 degree_class[degree[row] - 1] = row + 1
         print("Degree Class")
@@ -88,17 +86,17 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         # Initialization
         # Neutral and Positive matrix has size
         # number of nodes |V| x the max cardinality of the coalition k
-        neutral_init = (len(self.matrix), self.max_cardinality + 1)
+        neutral_init = (self.nodes_number, self.nodes_number + 1)
         neutral = np.zeros(neutral_init, dtype=int)
-        positive_init = (len(self.matrix), self.max_cardinality + 1)
+        positive_init = (self.nodes_number, self.nodes_number + 1)
         positive = np.zeros(positive_init, dtype=int)
         # For each cardinality of the group possible, going from 0 to the max cardinality |V|
-        for k in range(0, self.max_cardinality + 1):
-            for row in range(0, len(self.matrix)):
+        for k in range(0, self.nodes_number + 1):
+            for row in range(0, self.nodes_number):
                 # NEUTRAL MATRIX
                 # Initialize subtracting |V| (node numbers) - 1
-                neutral_control_variable = len(self.matrix) - 1
-                for column in range(0, len(self.matrix)):
+                neutral_control_variable = self.nodes_number - 1
+                for column in range(0, self.nodes_number):
                     if self.matrix[row, column] == 1:
                         # For each node linked to the node of the corresponding node, subtract 1
                         neutral_control_variable = neutral_control_variable - 1
@@ -111,14 +109,14 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
                 # POSITIVE MATRIX
                 # If the cardinality k equals the number of the nodes |V|,
                 # just set the cell value to 0
-                if k == len(self.matrix):
+                if k == self.nodes_number:
                     positive[row][k] = 0
                 # Otherwise set it to the Newton Binomial of (|V| k) -
                 # the Newton Binomial of (|V|-1 k-1) -
                 # the correspondent value of the Neutral Matrix
                 else:
-                    positive[row][k] = fast_binomial(len(self.matrix), k) - \
-                                       fast_binomial(len(self.matrix) - 1, k - 1) - \
+                    positive[row][k] = fast_binomial(self.nodes_number, k) - \
+                                       fast_binomial(self.nodes_number - 1, k - 1) - \
                                        neutral[row][k]
         print("Neutral Matrix")
         print(neutral)
@@ -135,15 +133,15 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         # Initialization
         # All the matrix has size
         # number of nodes |V| x max degree of the nodes
-        positive_relation_init = (len(self.matrix), max(degree))
-        negative_relation_init = (len(self.matrix), max(degree))
-        neutral_relation_init = (len(self.matrix), max(degree))
+        positive_relation_init = (self.nodes_number, max(degree))
+        negative_relation_init = (self.nodes_number, max(degree))
+        neutral_relation_init = (self.nodes_number, max(degree))
         positive_relation = np.zeros(positive_relation_init, dtype=int)
         negative_relation = np.zeros(negative_relation_init, dtype=int)
         neutral_relation = np.zeros(neutral_relation_init, dtype=int)
         # For each node
-        for row in range(0, len(self.matrix)):
-            for column in range(0, len(self.matrix)):
+        for row in range(0, self.nodes_number):
+            for column in range(0, self.nodes_number):
                 # If there is a link with another node,
                 # add 1 to the value of the cell corresponding to the node selected
                 # and group cardinality of the node which the selected node is linked to
@@ -205,7 +203,7 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         # g(|C|) = 1
         if centrality_measure_choice == "weighted":
             temp = 0
-            for column in range(0, len(self.matrix)):
+            for column in range(0, self.nodes_number):
                 temp += self.matrix[node][column]
             return 1 / temp, 1
         # Impact Factor of Bollen, Sompel, Smith, and Luce (2005)
@@ -222,10 +220,10 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         # g = 1/(|V|-|C|)
         # if |C| = |V|, return 1
         if centrality_measure_choice == "normalised":
-            if len(self.matrix) == coalition_cardinality:
+            if self.nodes_number == coalition_cardinality:
                 return 1, 1
             else:
-                return 1, 1 / (len(self.matrix) - coalition_cardinality)
+                return 1, 1 / (self.nodes_number - coalition_cardinality)
         # Classic Degree version is chosen
         else:
             return 1, 1

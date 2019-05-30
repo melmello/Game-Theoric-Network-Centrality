@@ -70,7 +70,7 @@ class MatrixUploader:
             for column in range(0, len(loaded_matrix)):
                 if row == column:
                     loaded_matrix[row][column] = 0
-        print("But this is the one that must be used")
+        print("But we will use this one (without self-loops):")
         print(loaded_matrix)
         return loaded_matrix
 

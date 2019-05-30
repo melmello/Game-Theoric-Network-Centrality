@@ -36,6 +36,7 @@ class Game:
 
         """
         self.matrix = matrix
+        self.length = len(matrix)
         self.characteristic_function = TYPE_TO_CLASS[characteristic_function](matrix)
         self.item, \
             self.item_class, \

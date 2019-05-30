@@ -5,7 +5,7 @@
 
 """
 from itertools import combinations
-import math
+from math import factorial
 import numpy as np
 
 
@@ -25,23 +25,22 @@ def classical_algorithm(game):
 
     """
     # Shapley Vector Initialization
-    shapley_value_init = (len(game.matrix))
-    shapley_value = np.zeros(shapley_value_init)
+    shapley_value = np.zeros(game.length)
+    # Create a list of all the nodes
+    node_list = list(range(0, game.length))
+    # Create a list of all the nodes that will be manipulated for permutation
+    permutable_nodes = list(range(0, game.length))
     # For each node in the network
-    for node in range(0, len(game.matrix)):
+    for node in range(0, game.length):
         print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
         print("NODE EVALUATED: ", node)
-        # Create a list of all the nodes
-        node_list = list(range(0, len(game.matrix)))
-        # Create a list of all the nodes that will be manipulated for permutation
-        permutable_nodes = list(range(0, len(game.matrix)))
         # Remove the node selected in order to obtain all the coalition not cointaing
         # the node selected in the cycle
         permutable_nodes.remove(node)
         # Initialize the total marginal contribution
         total_marginal_contribution = 0
         # For each coalition cardinality (s) going from 1 to |V|
-        for coalition_cardinality in range(1, len(game.matrix)):
+        for coalition_cardinality in range(1, game.length):
             print("\tCOALITION CARDINALITY: ", coalition_cardinality)
             # For each permutation of all the nodes (except for the node selected)
             # of size coalition cardinality s
@@ -61,12 +60,13 @@ def classical_algorithm(game):
                 # coalition size and n the number of all the vertex
                 weighted_marginal_contribution = \
                     marginal_contribution * \
-                    ((math.factorial(len(permutation)) *
-                      math.factorial(len(game.matrix) - len(permutation) - 1))
-                     / (math.factorial(len(game.matrix))))
+                    ((factorial(len(permutation)) *
+                      factorial(game.length - len(permutation) - 1))
+                     / (factorial(game.length)))
                 print("\t\tWEIGHTED MARGINAL CONTRIBUTION: ", weighted_marginal_contribution)
                 # Add this value to the marginal contribution of that node
                 total_marginal_contribution += weighted_marginal_contribution
+                print("\t\tTOTAL MARGINAL CONTRIBUTION: ", weighted_marginal_contribution)
         # Reintroduce in list the node deleted before to cycle over the next node
         permutable_nodes.append(node)
         # Update the Shapley Value Vector
