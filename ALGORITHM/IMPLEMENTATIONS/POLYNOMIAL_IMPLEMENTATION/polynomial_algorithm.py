@@ -5,7 +5,6 @@
 
 """
 import numpy as np
-
 from ALGORITHM.TOOLS.mathematical_tools import fast_binomial
 
 
@@ -172,3 +171,4 @@ def semi_algorithm(game, centrality_measure_choice):
             # and the weighted marginal contribution
             shapley_value[evaluated_node] += marginal_contribution
             print("\t\tSHAPLEY VALUES:\n\t\t", shapley_value)
+    print("SHAPLEY VALUES SUM: ", np.sum(shapley_value))

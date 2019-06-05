@@ -66,9 +66,18 @@ def classical_algorithm(game):
                 print("\t\tWEIGHTED MARGINAL CONTRIBUTION: ", weighted_marginal_contribution)
                 # Add this value to the marginal contribution of that node
                 total_marginal_contribution += weighted_marginal_contribution
-                print("\t\tTOTAL MARGINAL CONTRIBUTION: ", weighted_marginal_contribution)
+                print("\t\tTOTAL MARGINAL CONTRIBUTION: ", total_marginal_contribution)
+        # Added contribution of V({i}) - V(∅)
+        # Note that V(∅) = 0 in these games
+        total_marginal_contribution += \
+            (1 / game.length) * \
+            game.characteristic_function.get_coalition_value(game,
+                                                             node_list,
+                                                             [node])
         # Reintroduce in list the node deleted before to cycle over the next node
         permutable_nodes.append(node)
         # Update the Shapley Value Vector
         shapley_value[node] = total_marginal_contribution
-        print("\t\tSHAPLEY VALUES: \n\t", shapley_value)
+        print("\t\tTOTAL MARGINAL CONTRIBUTION: ", total_marginal_contribution)
+        print("FINAL SHAPLEY VALUES: \n", shapley_value)
+    print("\nSHAPLEY VALUES SUM: ", np.sum(shapley_value))
