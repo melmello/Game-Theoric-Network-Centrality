@@ -1,7 +1,8 @@
 """ Uploader of the User's Matrix
 
     MatrixUploader:
-        this class is used to take the user's input (adjacency matrix) and save it into the program.
+        this class is used to take the user's input (adjacency matrix)
+        and save it into the program.
 
 """
 import numpy as np
@@ -12,6 +13,8 @@ class MatrixUploader:
 
         The input is transferred to the program and saved as a matrix.
         Some checks on the file extension and name are done to ensure the correct process.
+        It is ensured that the matrix is symmetric and binary, and so it
+        represents an undirected unweighted graph.
 
         Attributes:
             no attributes are needed.
@@ -64,6 +67,14 @@ class MatrixUploader:
                 break
         print("The Matrix is the following:")
         print(loaded_matrix)
+        # Check on matrix symmetry (to ensure the graph is undirected)
+        if not np.allclose(loaded_matrix, loaded_matrix.T):
+            print("The matrix you have chosen is not suitable for this algorithm.")
+            exit(0)
+        # Ensure that the matrix is binary (and thus unweighted)
+        if not np.array_equal(loaded_matrix, loaded_matrix.astype(bool)):
+            print("The matrix you have chosen is not suitable for this algorithm.")
+            exit(1)
         # This is used to clean out the loop cycles on the matrix,
         # precisely the 1 in the matrix that are on the diagonal
         for row in range(0, len(loaded_matrix)):

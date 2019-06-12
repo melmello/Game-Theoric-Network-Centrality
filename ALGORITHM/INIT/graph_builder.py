@@ -2,7 +2,7 @@
 
     GraphBuilder:
         This class is used in order to have a feedback on the graph structure.
-        The screen prints out the adjacency matrix as a directed graph.
+        The screen prints out the adjacency matrix as an undirected graph.
 
 """
 import numpy as np
@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 class GraphBuilder:
     """ Graph builder and plotter
 
-        The graph is built and plotted on the screen as a directed graph.
+        The graph is built and plotted on the screen as an undirected graph.
 
         Attributes:
             no attributes are required.
@@ -64,12 +64,13 @@ class GraphBuilder:
         print("Edges:")
         for first_param, second_param in zip(rows.tolist(), cols.tolist()):
             print((first_param, second_param))
-        # Create a Directed Graph Object adding the nodes and the edges previously calculated
-        directed_graph = nx.DiGraph()
-        directed_graph.add_nodes_from(range(nodes_number))
-        directed_graph.add_edges_from(edges)
+        # Create an undirected unweighted Graph Object
+        # adding the nodes and the edges previously calculated
+        undirected_graph = nx.Graph()
+        undirected_graph.add_nodes_from(range(nodes_number))
+        undirected_graph.add_edges_from(edges)
         # Printing
-        pos = nx.drawing.layout.circular_layout(directed_graph)
-        nx.draw_networkx(directed_graph, pos=pos)
+        position = nx.drawing.layout.circular_layout(undirected_graph)
+        nx.draw_networkx(undirected_graph, pos=position)
         plt.axis('off')
         plt.show()

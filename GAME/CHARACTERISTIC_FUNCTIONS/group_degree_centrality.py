@@ -170,7 +170,7 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
             negative_relation, \
             neutral_relation
 
-    def centrality_measure(self, node, coalition_cardinality, centrality_measure_choice):
+    def centrality_measure(self, l_degree, coalition_cardinality, centrality_measure_choice):
         """ Centrality Measure Application
 
             Method used to apply the chosen Centrality Measure
@@ -199,20 +199,17 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         if centrality_measure_choice == "degree":
             return 1, 1
         # Weighted Degree of Newman (2004)
-        # f(v) = 1/deg(v)
+        # f(v) = 1/deg(Θl)
         # g(|C|) = 1
         if centrality_measure_choice == "weighted":
-            temp = 0
-            for column in range(0, self.nodes_number):
-                temp += self.matrix[node][column]
-            return 1 / temp, 1
+            return 1 / l_degree, 1
         # Impact Factor of Bollen, Sompel, Smith, and Luce (2005)
         # f = 1
         # g = 1/|C|
         # if |C| is 0, return 1
         if centrality_measure_choice == "impact":
             if coalition_cardinality == 0:
-                return 1, 1
+                return 1, 0
             else:
                 return 1, 1 / coalition_cardinality
         # Normalised Degree of Everett and Borgatti (1999)
@@ -221,7 +218,7 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         # if |C| = |V|, return 1
         if centrality_measure_choice == "normalised":
             if self.nodes_number == coalition_cardinality:
-                return 1, 1
+                return 1, 0
             else:
                 return 1, 1 / (self.nodes_number - coalition_cardinality)
         # Classic Degree version is chosen

@@ -77,7 +77,7 @@ def semi_algorithm(game, centrality_measure_choice):
                 # ***************************************************
                 # Definition of f and g parameters
                 (centrality_measure_f_parameter, centrality_measure_g_of_k_plus_1_parameter) = \
-                    game.characteristic_function.centrality_measure(evaluated_node,
+                    game.characteristic_function.centrality_measure(l_cardinality,
                                                                     k + 1,
                                                                     centrality_measure_choice)
                 # Definition of the set of coalitions of size k
@@ -106,7 +106,7 @@ def semi_algorithm(game, centrality_measure_choice):
                 # MCk ← MCk + |~RΘl({v})| * MC[2]
                 # ***************************************************
                 (centrality_measure_f_parameter, centrality_measure_g_of_k_parameter) = \
-                    game.characteristic_function.centrality_measure(evaluated_node,
+                    game.characteristic_function.centrality_measure(l_cardinality,
                                                                     k,
                                                                     centrality_measure_choice)
                 # Definition of the set of coalitions of size k
