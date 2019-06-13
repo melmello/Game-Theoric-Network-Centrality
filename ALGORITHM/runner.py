@@ -7,6 +7,7 @@
     External Libraries Required:
     - networkx.py
     - matplotlib.py
+    - numpy.py
 
     No class are present
 

@@ -87,9 +87,9 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         # Neutral and Positive matrix has size
         # number of nodes |V| x the max cardinality of the coalition k
         neutral_init = (self.nodes_number, self.nodes_number + 1)
-        neutral = np.zeros(neutral_init, dtype=int)
+        neutral = np.zeros(neutral_init, dtype=np.int64)
         positive_init = (self.nodes_number, self.nodes_number + 1)
-        positive = np.zeros(positive_init, dtype=int)
+        positive = np.zeros(positive_init, dtype=np.int64)
         # For each cardinality of the group possible, going from 0 to the max cardinality |V|
         for k in range(0, self.nodes_number + 1):
             for row in range(0, self.nodes_number):
@@ -136,9 +136,9 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         positive_relation_init = (self.nodes_number, max(degree))
         negative_relation_init = (self.nodes_number, max(degree))
         neutral_relation_init = (self.nodes_number, max(degree))
-        positive_relation = np.zeros(positive_relation_init, dtype=int)
-        negative_relation = np.zeros(negative_relation_init, dtype=int)
-        neutral_relation = np.zeros(neutral_relation_init, dtype=int)
+        positive_relation = np.zeros(positive_relation_init, np.int64)
+        negative_relation = np.zeros(negative_relation_init, np.int64)
+        neutral_relation = np.zeros(neutral_relation_init, np.int64)
         # For each node
         for row in range(0, self.nodes_number):
             for column in range(0, self.nodes_number):
@@ -182,7 +182,7 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
                 - Normalized Degree
 
             Args:
-                node (int): the node which apply the centrality measure to.
+                l_degree (int): degree of the group i'm considering.
                 coalition_cardinality (int): the cardinality of the coalition C
                     where the node is in.
                 centrality_measure_choice (string): the centrality measure chosen.
