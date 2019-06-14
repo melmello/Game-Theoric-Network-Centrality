@@ -50,7 +50,7 @@ class GamesManager:
                          word_checker(input("Select the characteristic function:\n"
                                             " - \tgroup_degree_centrality\n"
                                             " - \tgroup_betweenness_centrality\n"
-                                            " - \tgroup_closeness_centrality"),
+                                            " - \tgroup_closeness_centrality\n"),
                                       ["group_degree_centrality",
                                        "group_betweenness_centrality",
                                        "group_closeness_centrality"]))

@@ -36,7 +36,7 @@ def main():
     # Algorithm Application
     game_manager.centrality_algorithm(word_checker(input("Select the algorithm complexity:\n"
                                                          " - \tPolynomial\n"
-                                                         " - \tExponential"),
+                                                         " - \tExponential\n"),
                                                    ["polynomial",
                                                     "exponential"]))
 

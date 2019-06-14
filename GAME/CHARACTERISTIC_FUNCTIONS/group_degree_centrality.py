@@ -245,7 +245,7 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
                                   " - \tDegree\n"
                                   " - \tWeighted Degree\n"
                                   " - \tImpact Factor\n"
-                                  " - \tNormalised Degree"),
+                                  " - \tNormalised Degree\n"),
                             ["degree",
                              "weighted",
                              "impact",
