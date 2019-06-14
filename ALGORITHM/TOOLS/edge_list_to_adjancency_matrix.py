@@ -13,8 +13,8 @@
 """
 import numpy as np
 
-# Open the file
-file = open(input("Please, enter the INPUT file name\n"))
+# Open the file in the root path of the project
+file = open('../../' + input("Please, enter the INPUT file name\n"))
 # Initialize the max length of the file
 max_length = 0
 # Find the max to set the matrix cardinality
@@ -35,6 +35,7 @@ for row in file:
     # Set the symmetric direction arc
     matrix[res[1]][res[0]] = 1
 print(matrix)
-# Saving the file in a binary one
-with open(input("Please, enter the OUTPUT file name\n"), 'wb') as f:
+# Saving the file in a binary one in the MATRIX_EXAMPLES directory
+output_path = input("Please, enter the OUTPUT file name\n")
+with open('../../MATRIX_EXAMPLES/' + output_path, 'wb') as f:
     np.savetxt(f, matrix)

@@ -87,9 +87,9 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         # Neutral and Positive matrix has size
         # number of nodes |V| x the max cardinality of the coalition k
         neutral_init = (self.nodes_number, self.nodes_number + 1)
-        neutral = np.zeros(neutral_init, dtype=np.int64)
+        neutral = np.zeros(neutral_init, dtype='object')
         positive_init = (self.nodes_number, self.nodes_number + 1)
-        positive = np.zeros(positive_init, dtype=np.int64)
+        positive = np.zeros(positive_init, dtype='object')
         # For each cardinality of the group possible, going from 0 to the max cardinality |V|
         for k in range(0, self.nodes_number + 1):
             for row in range(0, self.nodes_number):
@@ -102,6 +102,9 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
                         neutral_control_variable = neutral_control_variable - 1
                 # If the quantity is greater or equal to k, apply the Newton Binomial Coefficient
                 if neutral_control_variable >= k:
+                    test = fast_binomial(neutral_control_variable, k)
+                    print(test)
+                    print("HEHEHEHEH QUINDI QUA VA BENE")
                     neutral[row][k] = fast_binomial(neutral_control_variable, k)
                 # Otherwise, just set it to 0
                 else:

@@ -54,12 +54,7 @@ class MatrixUploader:
         """
         while True:
             try:
-                matrix_path = input("Please, enter the file name\n")
-                # Check on absolute path in Windows: remove the disk letter
-                if ":" in matrix_path:
-                    matrix_path = matrix_path[3:]
-                print(matrix_path)
-                loaded_matrix = np.loadtxt(matrix_path, dtype=int)
+                loaded_matrix = np.loadtxt('../MATRIX_EXAMPLES/' + input("Please, enter the file name\n"), dtype=int)
             except IOError:
                 print("You might have put a wrong file name or path")
                 continue
