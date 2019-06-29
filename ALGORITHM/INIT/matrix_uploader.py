@@ -7,6 +7,8 @@
 """
 import numpy as np
 
+from ALGORITHM.TOOLS.utility_tools import word_checker
+
 
 class MatrixUploader:
     """ Matrix .txt to Matrix Class
@@ -39,7 +41,8 @@ class MatrixUploader:
     def input_definition():
         """ Initial function creating the matrix in the software
 
-            The system asks the user to specify the path or the file name of the matrix.
+            The system asks the user to specify the file name of the matrix or the
+            corresponding edge list to create a RAM version of it.
             Then this is read and transferred into a matrix.
             If the user specifies a wrong path or filename,
             the system underlines it asking again for the answer.
@@ -52,20 +55,48 @@ class MatrixUploader:
                 matrix (matrix): The matrix is the adjacency matrix loaded from the file.
 
         """
-        while True:
-            try:
-                loaded_matrix = np.loadtxt('../MATRIX_EXAMPLES/' + input("Please, enter the file name\n"), dtype=int)
-            except IOError:
-                print("You might have put a wrong file name or path")
-                continue
-            else:
-                break
+        # Matrix initialization
+        loaded_matrix = []
+        if word_checker(input("Please, select if you want to upload an edge list or a matrix file\n"),
+                        ["matrix", "list"]) == "list":
+            # Open the file in the EXAMPLES/EDGES_LIST_EXAMPLES folder of the project
+            file = open('../EXAMPLES/EDGES_LIST_EXAMPLES/' + input("Please, enter the INPUT file name\n"))
+            # Initialize the max length of the file
+            max_length = 0
+            # Find the max to set the matrix cardinality
+            for row in file:
+                numbers = [int(i) for i in row.split() if i.isdigit()]
+                # Set the max to the max between the previous value and the two integers
+                max_length = max(max_length, numbers[0], numbers[1])
+            # Come back to file beginning
+            file.seek(0)
+            # Initialize the matrix
+            loaded_matrix = np.zeros((max_length + 1, max_length + 1), dtype=int)
+            # For each row
+            for row in file:
+                # Results of the file line
+                res = [int(i) for i in row.split() if i.isdigit()]
+                # Set first direction arc
+                loaded_matrix[res[0]][res[1]] = 1
+                # Set the symmetric direction arc
+                loaded_matrix[res[1]][res[0]] = 1
+        else:
+            while True:
+                try:
+                    loaded_matrix = np.loadtxt('../EXAMPLES/MATRIX_EXAMPLES/' + input("Please, enter the file name\n"),
+                                               dtype=int)
+                except IOError:
+                    print("You might have put a wrong file name or path")
+                    continue
+                else:
+                    break
         print("The Matrix is the following:")
         print(loaded_matrix)
+        # TODO - Uncomment to check symmetry
         # Check on matrix symmetry (to ensure the graph is undirected)
-        if not np.allclose(loaded_matrix, loaded_matrix.T):
-            print("The matrix you have chosen is not suitable for this algorithm.")
-            exit(0)
+        # if not np.allclose(loaded_matrix, loaded_matrix.T):
+        #    print("The matrix you have chosen is not suitable for this algorithm.")
+        #    exit(0)
         # Ensure that the matrix is binary (and thus unweighted)
         if not np.array_equal(loaded_matrix, loaded_matrix.astype(bool)):
             print("The matrix you have chosen is not suitable for this algorithm.")

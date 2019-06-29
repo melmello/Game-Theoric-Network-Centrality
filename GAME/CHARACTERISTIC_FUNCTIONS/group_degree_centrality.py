@@ -102,9 +102,6 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
                         neutral_control_variable = neutral_control_variable - 1
                 # If the quantity is greater or equal to k, apply the Newton Binomial Coefficient
                 if neutral_control_variable >= k:
-                    test = fast_binomial(neutral_control_variable, k)
-                    print(test)
-                    print("HEHEHEHEH QUINDI QUA VA BENE")
                     neutral[row][k] = fast_binomial(neutral_control_variable, k)
                 # Otherwise, just set it to 0
                 else:
