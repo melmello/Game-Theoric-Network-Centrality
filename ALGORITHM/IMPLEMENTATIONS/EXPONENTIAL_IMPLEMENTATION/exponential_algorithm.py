@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ Exponential Time Algorithm
 
     This algorithm allows the computation of the central nodes in a network using
@@ -6,7 +7,6 @@
 """
 from itertools import combinations
 from math import factorial
-import mpmath
 import numpy as np
 
 

@@ -60,7 +60,7 @@ class MatrixUploader:
         if word_checker(input("Please, select if you want to upload an edge list or a matrix file\n"),
                         ["matrix", "list"]) == "list":
             # Open the file in the EXAMPLES/EDGES_LIST_EXAMPLES folder of the project
-            file = open('../EXAMPLES/EDGES_LIST_EXAMPLES/' + input("Please, enter the INPUT file name\n"))
+            file = open('EXAMPLES/EDGES_LIST_EXAMPLES/' + input("Please, enter the INPUT file name\n"))
             # Initialize the max length of the file
             max_length = 0
             # Find the max to set the matrix cardinality
@@ -83,7 +83,7 @@ class MatrixUploader:
         else:
             while True:
                 try:
-                    loaded_matrix = np.loadtxt('../EXAMPLES/MATRIX_EXAMPLES/' + input("Please, enter the file name\n"),
+                    loaded_matrix = np.loadtxt('EXAMPLES/MATRIX_EXAMPLES/' + input("Please, enter the file name\n"),
                                                dtype=int)
                 except IOError:
                     print("You might have put a wrong file name or path")

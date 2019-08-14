@@ -21,7 +21,7 @@ import numpy as np
 
 def main():
     # Open the file in the EXAMPLES/EDGES_LIST_EXAMPLES/ folder of the project
-    file = open('../EXAMPLES/EDGES_LIST_EXAMPLES/' + input("Please, enter the INPUT file name\n"))
+    file = open('EXAMPLES/EDGES_LIST_EXAMPLES/' + input("Please, enter the INPUT file name\n"))
     # Initialize the max length of the file
     max_length = 0
     # Find the max to set the matrix cardinality
@@ -44,7 +44,7 @@ def main():
     print(matrix)
     # Saving the file in a binary one in the EXAMPLES/MATRIX_EXAMPLES directory
     output_path = input("Please, enter the OUTPUT file name\n")
-    with open('../../EXAMPLES/MATRIX_EXAMPLES/' + output_path, 'wb') as f:
+    with open('EXAMPLES/MATRIX_EXAMPLES/' + output_path, 'wb') as f:
         np.savetxt(f, matrix)
     print("File created")
 

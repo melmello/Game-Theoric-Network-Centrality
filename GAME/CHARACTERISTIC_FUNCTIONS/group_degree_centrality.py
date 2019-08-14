@@ -209,7 +209,7 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         # if |C| is 0, return 1
         if centrality_measure_choice == "impact":
             if coalition_cardinality == 0:
-                return 1, 0
+                return 1, 1
             else:
                 return 1, 1 / coalition_cardinality
         # Normalised Degree of Everett and Borgatti (1999)
@@ -218,7 +218,7 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         # if |C| = |V|, return 1
         if centrality_measure_choice == "normalised":
             if self.nodes_number == coalition_cardinality:
-                return 1, 0
+                return 1, 1
             else:
                 return 1, 1 / (self.nodes_number - coalition_cardinality)
         # Classic Degree version is chosen
