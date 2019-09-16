@@ -123,12 +123,12 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         print("Positive Matrix")
         print(positive)
 
-        # R, ~R and N
+        # R, -R and N
         # ***************************************************
         # for v in V do
-        #   for u in E(v) do |RΘdeg(u)({v})| ← |RΘdeg(u)({v})| + 1
-        #   for u not in E(v) do |NΘdeg(u)({v})| ← |NΘdeg(u)({v})| + 1
-        #   |~RΘdeg(u)({v})| ← 1
+        #   for u in E(v) do |R_(Teta)deg(u)({v})| <- |R_(Teta)deg(u)({v})| + 1
+        #   for u not in E(v) do |N_(Teta)deg(u)({v})| <- |N_(Teta)deg(u)({v})| + 1
+        #   |-R_(Teta)deg(u)({v})| <- 1
         # ***************************************************
         # Initialization
         # All the matrix has size
@@ -199,7 +199,7 @@ class GroupDegreeCentrality(GroupCentralityMeasure):
         if centrality_measure_choice == "degree":
             return 1, 1
         # Weighted Degree of Newman (2004)
-        # f(v) = 1/deg(Θl)
+        # f(v) = 1/deg(Teta_l)
         # g(|C|) = 1
         if centrality_measure_choice == "weighted":
             return 1 / l_degree, 1

@@ -3,11 +3,6 @@
     GroupClosenessCentrality(GroupCentralityMeasure):
         closeness version of the characteristic function.
 
-    TODO:
-        - explanation of closeness centrality
-        - data_preparation
-        - centrality_measure
-
 """
 from GAME.CHARACTERISTIC_FUNCTIONS.group_centrality_measure import GroupCentralityMeasure
 

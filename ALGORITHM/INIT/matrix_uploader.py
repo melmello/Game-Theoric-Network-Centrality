@@ -71,15 +71,16 @@ class MatrixUploader:
             # Come back to file beginning
             file.seek(0)
             # Initialize the matrix
-            loaded_matrix = np.zeros((max_length + 1, max_length + 1), dtype=int)
+            loaded_matrix = np.zeros((max_length, max_length), dtype=int)
             # For each row
             for row in file:
                 # Results of the file line
                 res = [int(i) for i in row.split() if i.isdigit()]
                 # Set first direction arc
-                loaded_matrix[res[0]][res[1]] = 1
+                loaded_matrix[res[0]-1][res[1]-1] = 1
                 # Set the symmetric direction arc
-                loaded_matrix[res[1]][res[0]] = 1
+                loaded_matrix[res[1]-1][res[0]-1] = 1
+            np.savetxt('prova.txt',loaded_matrix,fmt='%.2f')
         else:
             while True:
                 try:
@@ -92,11 +93,10 @@ class MatrixUploader:
                     break
         print("The Matrix is the following:")
         print(loaded_matrix)
-        # TODO - Uncomment to check symmetry
         # Check on matrix symmetry (to ensure the graph is undirected)
-        # if not np.allclose(loaded_matrix, loaded_matrix.T):
-        #    print("The matrix you have chosen is not suitable for this algorithm.")
-        #    exit(0)
+        if not np.allclose(loaded_matrix, loaded_matrix.T):
+            print("The matrix you have chosen is not suitable for this algorithm.")
+            exit(0)
         # Ensure that the matrix is binary (and thus unweighted)
         if not np.array_equal(loaded_matrix, loaded_matrix.astype(bool)):
             print("The matrix you have chosen is not suitable for this algorithm.")

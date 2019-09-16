@@ -3,11 +3,6 @@
     GroupBetweennessCentrality(GroupCentralityMeasure):
         betweenness version of the characteristic function.
 
-    TODO:
-        - explanation of betweenness centrality
-        - data_preparation
-        - centrality_measure
-
 """
 from GAME.CHARACTERISTIC_FUNCTIONS.group_centrality_measure import GroupCentralityMeasure
 

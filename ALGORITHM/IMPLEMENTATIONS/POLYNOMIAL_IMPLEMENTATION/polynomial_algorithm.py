@@ -71,10 +71,10 @@ def semi_algorithm(game, centrality_measure_choice):
                 # Otherwise, continue with the marginal contribution computation
                 # MC1 - FIRST PART COMPUTATION
                 # ***************************************************
-                # ***[R(v, ϑ) and N(C, ϑ)]***
-                # |N#k^(-1)(Θl)| ← cN_G(ϑ∈Θl, k);
-                # MC[1] ← g(k+1) * f(Θl) * |N#k^(-1)(Θl)|
-                # MCk ← MCk + |RΘl({v})| * MC[1]
+                # ***[R(v, teta) and N(C, teta)]***
+                # |N#k^(-1)(Teta_l)| <- cN_G(teta in Teta_l, k);
+                # MC[1] <- g(k+1) * f(Teta_l) * |N#k^(-1)(Teta_l)|
+                # MCk <- MCk + |R_Teta_l({v})| * MC[1]
                 # ***************************************************
                 # Definition of f and g parameters
                 (centrality_measure_f_parameter, centrality_measure_g_of_k_plus_1_parameter) = \
@@ -99,7 +99,7 @@ def semi_algorithm(game, centrality_measure_choice):
                       game.positive_relation[evaluated_node][l_cardinality - 1])
                 print("\t\t\t#1 - OLD GENERAL MARGINAL CONTRIBUTION: ", marginal_contribution)
                 # First type marginal contribution addition to the general marginal contribution,
-                # weighted by the value that the set of items in group Θl
+                # weighted by the value that the set of items in group Teta_l
                 # is positively related to C has
                 marginal_contribution = \
                     marginal_contribution + \
@@ -109,17 +109,17 @@ def semi_algorithm(game, centrality_measure_choice):
                 print("\t\t\t----------")
                 # MC2 - SECOND COMPUTATION
                 # ***************************************************
-                # ***[~R(v, ϑ) and R(C, ϑ)]***
-                # |R#k^(-1)(Θl)| ← cR_G(ϑ∈Θl, k);
-                # MC[2] ← g(k) * f(Θl) * |R#k^(-1)(Θl)|
-                # MCk ← MCk + |~RΘl({v})| * MC[2]
+                # ***[~R(v, teta) and R(C, teta)]***
+                # |R#k^(-1)(Teta_l)| ← cR_G(teta in Teta_l, k);
+                # MC[2] ← g(k) * f(Teta_l) * |R#k^(-1)(Teta_l)|
+                # MCk ← MCk + |-R_Teta_l({v})| * MC[2]
                 # ***************************************************
                 (centrality_measure_f_parameter, centrality_measure_g_of_k_parameter) = \
                     game.characteristic_function.centrality_measure(l_cardinality,
                                                                     k,
                                                                     centrality_measure_choice)
                 # Definition of the set of coalitions of size k
-                # to which item ϑ is positively related
+                # to which item _teta is positively related
                 positive_contribution = game.positive[game.item_class[l_cardinality - 1] - 1][k]
                 print("\t\t\t#2 - SET OF COALITIONS OF SIZE K TO WHICH TETA IS POSITIVELY RELATED: ",
                       positive_contribution)
@@ -137,7 +137,7 @@ def semi_algorithm(game, centrality_measure_choice):
                 print("\t\t\t#2 - OLD GENERAL MARGINAL CONTRIBUTION: ", marginal_contribution)
                 # Second type marginal contribution subtraction
                 # to the general marginal contribution,
-                # weighted by the value that the set of items in group Θl
+                # weighted by the value that the set of items in group Teta_l
                 # is negatively related to C has
                 marginal_contribution = \
                     marginal_contribution - \
@@ -147,9 +147,9 @@ def semi_algorithm(game, centrality_measure_choice):
                 print("\t\t\t----------")
                 # MC3 - THIRD COMPUTATION
                 # ***************************************************
-                # ***[R(v, ϑ) or N(v, ϑ), and R(C, ϑ)]***
-                # MC[3] ← (g(k+1) - g(k)) * f(Θl) * |R#k^(-1)(Θl)|
-                # MCk ← MCk + |RΘl({v}) ∪ NΘl({v})| * MC[3]
+                # ***[R(v, teta) or N(v, teta), and R(C, teta)]***
+                # MC[3] <- (g(k+1) - g(k)) * f(Teta_l) * |R#k^(-1)(Teta_l)|
+                # MCk <- MCk + |R_Teta_l({v}) ∪ N_Teta_l({v})| * MC[3]
                 # ***************************************************
                 print("\t\t\t#3 - SET OF COALITIONS OF SIZE K TO WHICH TETA IS POSITIVELY RELATED: ",
                       positive_contribution)
@@ -170,9 +170,9 @@ def semi_algorithm(game, centrality_measure_choice):
                       game.neutral_relation[evaluated_node][l_cardinality - 1])
                 print("\t\t\t#3 - OLD GENERAL MARGINAL CONTRIBUTION: ", marginal_contribution)
                 # Third type marginal contribution addiction to the general marginal contribution,
-                # weighted by the value that the set of items in group Θl
+                # weighted by the value that the set of items in group Teta_l
                 # is negatively related to C has summed to the value that the set of items
-                # in group Θl is positively related to C
+                # in group Teta_l is positively related to C
                 marginal_contribution = \
                     marginal_contribution + \
                     (game.positive_relation[evaluated_node][l_cardinality - 1] +
@@ -181,8 +181,8 @@ def semi_algorithm(game, centrality_measure_choice):
                 print("\t\t\t#3 - NEW GENERAL MARGINAL CONTRIBUTION: ", marginal_contribution)
             # MC - END STEP
             # ***************************************************
-            # MCk ← (β(k) / (|V|−1 k)) * MCk
-            # φv ← φv + MCk
+            # MCk <- (Beta(k) / (|V|−1 k)) * MCk
+            # phi_v <- phi_v + MCk
             # ***************************************************
             # Final computation of the marginal contribution as the value previously calculated
             # weighted by the division between the Shapley Beta function and the Newton binomial

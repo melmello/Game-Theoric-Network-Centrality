@@ -35,7 +35,7 @@ def classical_algorithm(game):
     for node in range(0, game.length):
         print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
         print("NODE EVALUATED: ", node)
-        # Remove the node selected in order to obtain all the coalition not cointaing
+        # Remove the node selected in order to obtain all the coalition not containing
         # the node selected in the cycle
         permutable_nodes.remove(node)
         # Initialize the total marginal contribution
@@ -48,7 +48,7 @@ def classical_algorithm(game):
             for permutation_tuple in combinations(permutable_nodes, coalition_cardinality):
                 # Cast the tuple to list
                 permutation = list(permutation_tuple)
-                # − v(S) + v(S ∪ {i})
+                # − v(S) + v(S U {i})
                 marginal_contribution = \
                     - game.characteristic_function.get_coalition_value(game,
                                                                        node_list,
@@ -68,8 +68,8 @@ def classical_algorithm(game):
                 # Add this value to the marginal contribution of that node
                 total_marginal_contribution += weighted_marginal_contribution
                 print("\t\tTOTAL MARGINAL CONTRIBUTION: ", total_marginal_contribution)
-        # Added contribution of V({i}) - V(∅)
-        # Note that V(∅) = 0 in these games
+        # Added contribution of V({i}) - V(0)
+        # Note that V(0) = 0 in these games
         total_marginal_contribution += \
             (1 / game.length) * \
             game.characteristic_function.get_coalition_value(game,
